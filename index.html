@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valentine's Surprise 💖</title>
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top, #ff4d6d, #0d0d0d);
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        /* Floating hearts background */
+        
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .floating-hearts span {
+            position: absolute;
+            bottom: -50px;
+            font-size: 22px;
+            animation: floatUp 10s linear infinite;
+            opacity: 0.6;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-130vh) scale(1.6);
+                opacity: 0;
+            }
+        }
+        /* COMMON STYLES FOR PAGE SECTIONS */
+        
+        .page {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        /* ---------------------- Page 1: Email ---------------------- */
+        
+        #page1 {
+            display: block;
+        }
+        
+        #page1 .email-container {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 30px 30px;
+            border-radius: 25px;
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+        
+        #page1 .header {
+            font-size: 34px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        #page1 .sub-title {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 18px;
+        }
+        
+        #page1 .poem {
+            font-size: 17px;
+            line-height: 1.8;
+            padding: 18px;
+            border-radius: 18px;
+            margin-bottom: 18px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ffb3c6;
+            box-shadow: inset 0 0 15px rgba(255, 51, 102, 0.2);
+            max-height: 230px;
+            overflow-y: auto;
+        }
+        
+        #page1 .poem::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        #page1 .poem::-webkit-scrollbar-thumb {
+            background: rgba(255, 51, 102, 0.6);
+            border-radius: 10px;
+        }
+        
+        #page1 .question {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 15px 0 10px;
+            color: #ffffff;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            margin: 8px 8px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.35s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .yes-btn {
+            background: linear-gradient(45deg, #ff3366, #ff80ab);
+            color: #fff;
+        }
+        
+        .yes-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 25px rgba(255, 51, 102, 0.7);
+        }
+        
+        .no-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ff80ab;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .no-btn:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        #page1 .hearts {
+            font-size: 30px;
+            margin: 12px 0;
+            color: #ff4d6d;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        /* Modal */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 30;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, rgba(255, 51, 102, 0.9), rgba(255, 128, 171, 0.7));
+            width: 420px;
+            max-width: 95%;
+            padding: 25px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            animation: zoomIn 0.4s ease;
+        }
+        
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .modal-content h2 {
+            margin: 0;
+            font-size: 26px;
+            font-weight: 800;
+        }
+        
+        .modal-content p {
+            font-size: 16px;
+            margin-top: 12px;
+            line-height: 1.6;
+        }
+        
+        .close-btn {
+            margin-top: 18px;
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            background: #0d0d0d;
+            color: #fff;
+            transition: 0.3s;
+        }
+        
+        .close-btn:hover {
+            transform: scale(1.08);
+            background: #1c1c1c;
+        }
+        /* ---------------------- Page 2: Oops ---------------------- */
+        
+        #page2 {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #page2 .box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        #page2 h1 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+        
+        #page2 p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #ffb3c6;
+        }
+        /* ---------------------- Page 3: Video ---------------------- */
+        
+        #page3 {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #page3 .video-box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 30px;
+            width: 850px;
+            max-width: 95%;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+        
+        #page3 h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #ffcc00;
+            text-shadow: 2px 2px 5px #ff4d6d;
+        }
+        
+        #page3 p {
+            font-size: 17px;
+            color: #eef3f3;
+            text-shadow: 1px 1px 3px #ff4d6d;
+        }
+        
+        #page3 video {
+            width: 500px;
+            height: 500px;
+            border-radius: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            object-fit: contain;
+            background: black;
+        }
+        
+        @media (max-width: 700px) {
+            #page3 video {
+                width: 100%;
+                height: auto;
+            }
+            #page3 h1 {
+                font-size: 25px;
+            }
+            #page3 p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating hearts -->
+    <div class="floating-hearts">
+        <span style="left:10%; animation-duration: 8s;">💖</span>
+        <span style="left:20%; animation-duration: 12s;">💌</span>
+        <span style="left:35%; animation-duration: 10s;">💕</span>
+        <span style="left:50%; animation-duration: 14s;">💞</span>
+        <span style="left:65%; animation-duration: 9s;">💗</span>
+        <span style="left:80%; animation-duration: 11s;">❤️</span>
+        <span style="left:90%; animation-duration: 13s;">🌹</span>
+    </div>
+
+    <!-- PAGE 1 -->
+    <div id="page1" class="page">
+        <div class="email-container">
+            <div class="hearts">💖💌💖</div>
+            <div class="header">Happy Valentine's Day, Kuttyma! 💕</div>
+            <div class="sub-title">A special message from my heart 💗</div>
+
+            <div class="poem">
+                Baby… I love you more than words can say 🩷. Every time I see you, my heart beats faster and I feel butterflies all over 🦋✨. I know I’ve hurt you sometimes, and that makes me feel terrible 😔… I’m really, really sorry. I promise I’ll do my best never
+                to hurt you again 🤞💗. You are my everything, my safe place, my home 🥰… I’ve never loved anyone like this ❤️. When you don’t talk to me, I feel empty and sad 😢… tears sometimes coming without me noticing 🥺💧. Please… give me a little
+                more of your love and try to feel my heart 💞✨. You are my world, Purusha 💕… my life, my heartbeat, my reason for everything 🌍❤️. I dream of the day I can hold you forever and call you mine 💍💖… just thinking about it keeps me going.
+                I can’t fully explain how much I love you… because my love for you never ends ♾️❤️🌹. Every second without you feels so long… I just want you to know, I need you… I love you more than anything, more than anyone, more than life itself.
+
+
+
+            </div>
+
+            <div class="question">Do you want to see something special? 😘</div>
+
+            <div>
+                <button class="btn yes-btn" onclick="showPage('page3')">Yes 💖</button>
+                <button class="btn no-btn" onclick="openModal()">No 😢</button>
+            </div>
+
+            <div class="hearts">💌💖💌</div>
+
+            <!-- Modal -->
+            <div class="modal" id="loveModal">
+                <div class="modal-content">
+                    <h2>😡 Heyyy Kuttymaaaa 💕</h2>
+                    <p>You clicked NO 😭💔 <br><br> But my heart says you are lying 😘✨ <br> I know you love me too 😍💖</p>
+                    <button class="close-btn" onclick="closeModal()">Close 💌</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div id="page2" class="page">
+        <div class="box">
+            <h1>😢 Aww Kuttyma...</h1>
+            <p>You closed it... <br><br> But still my love for you never closes 💖✨ <br> Come back please 🥺💌</p>
+            <button class="btn" onclick="closePage('page2')">Go Back 💕</button>
+        </div>
+    </div>
+
+    <!-- PAGE 3 -->
+    <div id="page3" class="page">
+        <div class="video-box">
+            <h1>💖 Special Surprise For You 💖</h1>
+            <p>Kuttymaaa 😘✨ <br> This video is only for you 💌💕</p>
+            <video controls autoplay>
+                <source src="spe.mp4" type="video/mp4">
+            </video>
+            <button class="btn" onclick="closePage('page3')" style="margin-top:15px;">Close 💕</button>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // hide any open overlay first
+            document.getElementById('page2').style.display = 'none';
+            document.getElementById('page3').style.display = 'none';
+
+            // show the requested overlay
+            document.getElementById(pageId).style.display = 'flex';
+        }
+
+        function closePage(pageId) {
+            document.getElementById(pageId).style.display = 'none';
+        }
+
+        function openModal() {
+            document.getElementById('loveModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('loveModal').style.display = 'none';
+            showPage('page2'); // show page2 after closing modal
+        }
+    </script>
+</body>
+
+</html>
+
+</body>
+
+</html>
